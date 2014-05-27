@@ -3,10 +3,49 @@ layout: page
 title: MSR 2014 Mining Challenge Dataset 
 tagline: 
 ---
+### Versions
 
-*Note: the first version of the dataset was missing commit comments and some
-commits. If you have downloaded this dataset before 9 Oct 2013, and you plan to
-do research with commits and comments, you are advised to download the latest version.*
+After the initial release of the dataset, the users found errors and missing
+features. The list of versions along with the fixes is presented in the table
+below. Only the latest version is offered for download. 
+
+*You are advised to always run queries against the newest version.* If you have already downloaded an older version and the described fix does not
+affect your experiment, you could skip the update. 
+
+<table class="table table-hover table-condensed">
+  <thead>
+  <tr>
+      <th>Version</th>
+      <th>Release date</th>
+      <th>Fixed error</th>
+  </tr>
+  </thead> 
+  <tbody>
+  <tr>
+      <td>1.3</td>
+      <td>13 Dec 2013</td>
+      <td><a href="http://ghtorrent.org/msr14.html#comment-1161196386">Missing project members</a> for some projects is now fixed</td>
+  </tr>
+   <tr>
+      <td>1.2</td>
+      <td>22 Oct 2013</td>
+      <td>user_id in table commit_comments <a href="http://ghtorrent.org/msr14.html#comment-1087775543">not set correctly</a>.</td>
+  </tr>
+    <tr>
+      <td>1.1</td>
+      <td>9 Oct 2013</td>
+      <td>
+      Table commit_comments was missing data. Some commits were missing from
+      some projects.
+      </td>
+  </tr>
+    <tr>
+      <td>1.0</td>
+      <td>28 Sep 2013</td>
+      <td></td>
+  </tr>
+  </tbody>
+</table>
 
 ### Dataset description
 
@@ -129,7 +168,7 @@ $ tar zxvf msr14-mongo.tar.gz
 $ mongorestore
 $ mongo msr14
 mongo> db.commits.count()
-423604
+601080
 mongo> db.issues.count()
 126308
 {%endhighlight %}
@@ -189,7 +228,8 @@ on Github. Perhaps the only reason to use the MongoDB dump is to analyse commit 
 #### How can I ask a question about the dataset? 
 
 Your question and the potential answer might be useful for other people as well,
-so please use the form below. 
+so please use the form below. *Please note that I will not answer
+questions sent to my email.*
 
 {% include comments.html%}
     
