@@ -98,12 +98,16 @@ suite](http://www.gousios.gr/bibliography/G13.html). MSR 2013: 233-236
   </thead>
   <tbody>
     <tr>
-      <td>Thu Jan  2 10:38:27 CET 2014</td> 
-      <td>New backups are being created. Services may be offline for the next couple of days.</td>
+      <td>Mon Aug 18 13:25:45 CEST 2014</td>
+      <td>New MongoDB and MySQL backups uploaded.</td>
     </tr>
-    <tr>
+     <tr>
       <td>Mon Mar 31 14:07:42 CEST 2014</td>
       <td>New MongoDB and MySQL backups uploaded.</td>
     </tr>
-  </tbody>
+     <tr>
+      <td>Thu Jan  2 10:38:27 CET 2014</td> 
+      <td>New backups are being created. Services may be offline for the next couple of days.</td>
+    </tr>
+ </tbody>
 </table>
