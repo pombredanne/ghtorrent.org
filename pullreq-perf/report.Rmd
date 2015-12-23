@@ -11,7 +11,6 @@ title: Performance report for `r owner`/`r repo`
 # BSD licensed, see LICENSE in top level dir
 #
 
-library(RMySQL)
 library(ggplot2)
 library(reshape)
 library(plyr)

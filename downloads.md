@@ -1,21 +1,27 @@
 ---
 layout: page
-title: Downloads 
-tagline: 
+title: Downloads
+tagline:
 ---
 
 ### What am I downloading?
 
-* The MySQL dump is a full, up to date database dump. You can safely use it for querying the latest available data.
-* The MongoDB dumps are provided mostly for reference and backup purposes, as they may contain duplicates. The reasons for this are the following:
+* The MySQL dump is a full, up to date database dump. You can use it for querying the latest available data.
+* The MongoDB dumps are incremental. They are provided mostly for reference and backup purposes, as they may contain duplicates. The reasons for this are the following:
   * When refreshing project data, old records are deleted and new are added. This cannot be reflected in the dumps (it is not practical to regenerate all dumps every time).
   * The dumps have already been restored once, hence the dump dates do not
 represent the actual data generation dates.
+* You can verify the downloaded dumps using SHA256. Here are the signatures: [SHA256SUM](/downloads/SHA256SUM)
 
 For those reasons, we recommend using the MongoDB data through our [query
-service](http://ghtorrent.org/raw.html). 
+service](http://ghtorrent.org/raw.html).
 
-### MySQL database dumps 
+### MySQL database dumps
+<button type="button" class="btn btn-success">New!</button> As of MySQL dump
+`mysql-2015-09-25`, we are distributing CSV files (one file per table) instead
+of `mysqldump` based backups. The provided archive expands to a directory
+including a restore script and instructions on how to do the restore. See more
+information [here](https://github.com/gousiosg/github-mirror/tree/master/sql).
 
 You can also [query MySQL](/dblite). It is always loaded with the latest
 dump.
@@ -25,9 +31,12 @@ dump.
 * [2014-04-02](/downloads/mysql-2014-04-02.sql.gz)
 * [2014-08-18](/downloads/mysql-2014-08-18.sql.gz)
 * [2014-11-10](/downloads/mysql-2014-11-10.sql.gz)
+* [2015-01-04](/downloads/mysql-2015-01-04.sql.gz)
+* [2015-04-01](/downloads/mysql-2015-04-01.sql.gz)
+* [2015-09-25](/downloads/mysql-2015-09-25.tar.gz)
 
 ### Available Downloads
-List of available torrents (Last dump date: 2014-09-29)
+List of available downloads (Last dump date: 2015-03-29)
 <table class="table table-hover table-condensed">
 <thead>
 <tr>
@@ -803,6 +812,154 @@ List of available torrents (Last dump date: 2014-09-29)
 </td>
 <td>
 <a href="http://ghtorrent.org/downloads/watchers-dump.2014-09-29.tar.gz">220 MB</a>
+</td>
+</tr>
+<tr>
+<td>2014-11-29</td>
+<td>
+<a href="http://ghtorrent.org/downloads/commit_comments-dump.2014-11-29.tar.gz">39 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/commits-dump.2014-11-29.tar.gz">120799 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/events-dump.2014-11-29.tar.gz">10720 MB</a>
+</td>
+<td>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/forks-dump.2014-11-29.tar.gz">22 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/issue_comments-dump.2014-11-29.tar.gz">577 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/issue_events-dump.2014-11-29.tar.gz">139 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/issues-dump.2014-11-29.tar.gz">415 MB</a>
+</td>
+<td>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/pull_request_comments-dump.2014-11-29.tar.gz">215 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/pull_requests-dump.2014-11-29.tar.gz">681 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/repo_collaborators-dump.2014-11-29.tar.gz">92 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/repo_labels-dump.2014-11-29.tar.gz">82 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/repos-dump.2014-11-29.tar.gz">681 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/users-dump.2014-11-29.tar.gz">36 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/watchers-dump.2014-11-29.tar.gz">232 MB</a>
+</td>
+</tr>
+<tr>
+<td>2015-01-29</td>
+<td>
+<a href="http://ghtorrent.org/downloads/commit_comments-dump.2015-01-29.tar.gz">42 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/commits-dump.2015-01-29.tar.gz">121675 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/events-dump.2015-01-29.tar.gz">10628 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/followers-dump.2015-01-29.tar.gz">3 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/forks-dump.2015-01-29.tar.gz">377 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/issue_comments-dump.2015-01-29.tar.gz">708 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/issue_events-dump.2015-01-29.tar.gz">208 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/issues-dump.2015-01-29.tar.gz">444 MB</a>
+</td>
+<td>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/pull_request_comments-dump.2015-01-29.tar.gz">358 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/pull_requests-dump.2015-01-29.tar.gz">761 MB</a>
+</td>
+<td>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/repo_labels-dump.2015-01-29.tar.gz">146 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/repos-dump.2015-01-29.tar.gz">1256 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/users-dump.2015-01-29.tar.gz">48 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/watchers-dump.2015-01-29.tar.gz">255 MB</a>
+</td>
+</tr>
+<tr>
+<td>2015-03-29</td>
+<td>
+<a href="http://ghtorrent.org/downloads/commit_comments-dump.2015-03-29.tar.gz">48 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/commits-dump.2015-03-29.tar.gz">128271 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/events-dump.2015-03-29.tar.gz">12939 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/followers-dump.2015-03-29.tar.gz">90 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/forks-dump.2015-03-29.tar.gz">542 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/issue_comments-dump.2015-03-29.tar.gz">830 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/issue_events-dump.2015-03-29.tar.gz">208 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/issues-dump.2015-03-29.tar.gz">520 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/org_members-dump.2015-03-29.tar.gz">2 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/pull_request_comments-dump.2015-03-29.tar.gz">317 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/pull_requests-dump.2015-03-29.tar.gz">937 MB</a>
+</td>
+<td>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/repo_labels-dump.2015-03-29.tar.gz">191 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/repos-dump.2015-03-29.tar.gz">1490 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/users-dump.2015-03-29.tar.gz">53 MB</a>
+</td>
+<td>
+<a href="http://ghtorrent.org/downloads/watchers-dump.2015-03-29.tar.gz">273 MB</a>
 </td>
 </tr>
 </tbody>

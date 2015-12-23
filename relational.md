@@ -1,21 +1,45 @@
 ---
 layout: page
-title: The relational DB schema 
-tagline: 
+title: The relational DB schema
+tagline:
 ---
 
-<img width="20%" src="files/schema.png"/> 
+<img width="20%" src="files/schema.png"/>
 
 [Download](files/schema.png) [Download PDF](files/schema.pdf)
 
 ## Entities and their relationships
 
 #### users
-Github users. 
+Github users.
 
-* A user has a unique user name or email. May contain artificially generated user names, see [commits](relational.html#commits) below. 
-* There are two `type`s of users, `USER`s and `ORG`anizations. The second type
-defines a collection of users.
+* A user has a unique user name or email. May contain artificially generated user names, see [commits](relational.html#commits) below.
+* There are two `type`s of users, `USER`s and `ORG`anizations.
+  * Users can be *real* or *fake*. Real users can own projects and perform
+ actions such as open issues, create pull requests and push commits. Fake
+ users only appear as authors or committers of commits. Fake users are marked
+ by the `fake` field.
+  * Organizations are meta users that point to a collection of users. The members of organizations can be found in `organization_members`. Organization users can only own projects and they do not perform any other actions.
+* Users may be marked as `deleted`. This means that the user was once active on
+GitHub but GHTorrent can no longer get his/her details.
+
+*Update Nov 2015:* User entries are now geocoded. The location field remains
+intact, while 5 fields have been added with information about the
+geographic location of the user. The Open Street Maps API has been used
+to do the mapping of the location field to the user's geocode. As a result,
+the state and city fields are stored in the local language of the geocoded
+area. Also, many users do not report their location or their location
+is field in with random information; in those cases, no geocoding information
+is available.
+
+{% highlight sql %}
+--- See where most commits are commit from today
+select u.country_code, count(*)
+from commits c, users u
+where c.author_id = u.id
+and date(c.created_at) = date(now())
+group by u.country_code
+{% endhighlight %}
 
 #### organization\_members
 Users that are members of an organization.
@@ -24,14 +48,21 @@ Users that are members of an organization.
 GHTorrent has recorded a corresponding event. Otherwise, it is filled in with the
 latest date that the corresponding user or organization has been created.
 
+*Update Nov 2015:* Organizations can now select wheather membership information
+is revealed to external parties. This means that information about this
+table can no longer be accurate.
+
 #### projects
 Information about repositories. A repository is always owned by a user.
 
 * The `forked_from` field is empty unless the
 project is a fork in which case it contains the `id` of the project the project
-is forked from. 
+is forked from.
 
-* The `deleted` field means that the project has been deleted from Github. 
+* The `deleted` field means that the project has been deleted from Github.
+
+* The `updated_at` field indicates when the last full update was done for
+this project.
 
 #### project\_members
 Users that have commit access to the repository.
@@ -40,15 +71,64 @@ The `created_at` field is only filled in accurately for memberships for which
 GHTorrent has recorded a corresponding event. Otherwise, it is filled in with the
 latest date that the corresponding user or project has been created.
 
+*Update Nov 2014:* GitHub has disabled the API end point used to retrieve
+members to an organization. GHTorrent uses the `MemberEvent` event to
+approximate memberships, but this is not always accurate. You are thus advised
+to use heuristics (e.g. the  committers + mergers of pull) to calculate membership.
+
+{% highlight sql %}
+--- Get active core team participants for the last 3 months
+select distinct(u.login) as login
+    from commits c, users u, project_commits pc, users u1, projects p
+    where u.id = c.committer_id
+      and u.fake is false
+      and pc.commit_id = c.commit_id
+      and pc.project_id = p.id
+      and p.owner_id = u1.id
+      and p.name = 'rails'
+      and u1.login = 'rails'
+      and c.created_at > DATE_SUB(NOW(), INTERVAL 3 MONTH)
+union
+select distinct(u.login) as login
+  from pull_requests pr, projects p, users u, users u1, pull_request_history prh
+  where u.id = prh.actor_id
+    and prh.action = 'merged'
+    and u1.id = p.owner_id
+    and prh.pull_request_id = pr.id
+    and pr.base_repo_id = p.id
+    and prh.created_at > DATE_SUB(NOW(), INTERVAL 3 MONTH)
+    and p.name = 'rails'
+    and u1.login = 'rails'
+{% endhighlight %}
+
+
+### project\_languages
+Languages that are used in the repository along with **byte counts** for
+all files in those languages.
+
+Multiple entries can exist per project. The `created_at` field is filled in with
+the latest timestamp the query for a specific `project_id` was done.
+
+The table is filled in when the project has been first inserted on when
+an update round for all projects is made.
+
+{% highlight sql %}
+-- Get the latest byte count for languges in Ruby on Rails
+select *
+from project_languages
+where project_id = 1334
+order by created_at desc
+
+{% endhighlight %}
+
 #### commits
-Unique commits. 
+Unique commits.
 
 * Each commit is identified globally through its `sha` field. If the author or
 the committer has not configured his [Github email address](https://help.github.com/articles/setting-your-email-in-git), no resolution to
-a User enty is possible. In that case, GHTorrent generates artificial users using
-the provided email in the Git commit author or committer fields. If the user
+a `user` entry is possible. In that case, GHTorrent generates artificial users using the provided email in the Git commit author or committer fields. If the user
 then configures his Github account, GHTorrent will update the artificial user
-accordingly.
+accordingly. 
 
 * The `project_id` field contains a link to the project that this commit has
 been first associated with. This might not be the project this commit was
@@ -155,7 +235,7 @@ commit when a pull request has been closed, merged or referenced.
 
 #### issue\_comments
 An entry to the issue discussion. This table is always filled in with pull
-request (or issue) discussion comments, irrespective of whether the repo
+request (or issue) discussion comments, irrespective of whether the repository
 has issues enabled or not.
 
 #### repo\_labels
@@ -221,5 +301,21 @@ select distinct(user_id) from
   from issue_comments ic, issues i
   where i.id = ic.issue_id and i.pull_request_id = ?
 ) as participants
+{%endhighlight%}
+
+#### Get all users in NL that committed to a Java project today
+
+{%highlight sql%}
+select u.login
+from users u, commits c, projects p, project_commits pc
+where date(c.created_at) = date(now())
+and pc.commit_id = c.id
+and c.author_id = u.id
+and u.country_code = 'nl'
+and 'java' = (select pl.language
+              from project_langauges pl
+              where pl.project_id = p.id
+              order by pl.created_at desc, pl.bytes desc
+              limit 1)
 {%endhighlight%}
 
